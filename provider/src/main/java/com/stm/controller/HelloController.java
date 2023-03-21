@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class HelloController {
     @RequestMapping("/hello")
     public String hello(){
-        String str ="git test";
+        String str ="git@github.com:suntm1001/nacos_project.git";
         return "l";
     }
 }
