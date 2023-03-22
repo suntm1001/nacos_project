@@ -8,7 +8,7 @@ public class HelloController {
     @RequestMapping("/hello")
     public String hello(){
         String str ="git@github.com:suntm1001/nacos_project.git";
-        String s = "sss";
+        String s = "ss";
         return "l";
     }
 }
