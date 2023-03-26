@@ -9,6 +9,7 @@ public class HelloController {
     public String hello(){
         String str ="git@github.com:suntm1001/nacos_project.git";
         String s = "ss";
+        String test ="";
         return "l";
     }
 }
