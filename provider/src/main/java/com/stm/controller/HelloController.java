@@ -9,6 +9,7 @@ import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
+import org.quartz.TriggerKey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -79,7 +80,7 @@ public class HelloController {
         try {
             JobDetail jobDetail = JobBuilder.newJob(getClass(classname))
                     //添加认证信息
-                    .withIdentity("quartzTestDetailTwo","QUARTZ_TEST_TWO")
+                    .withIdentity("com.stm.job.QuartzTestTwoJob","QuartzTestTwoJob")
                     .storeDurably()
                     .build();
             //执行频率
@@ -87,7 +88,7 @@ public class HelloController {
 
             Trigger trigger = TriggerBuilder.newTrigger().forJob(jobDetail)
                     //添加认证信息
-                    .withIdentity("quartzTestJobTriggerTwo", "QUARTZ_TEST_JOB_TRIGGER_TWO")
+                    .withIdentity("com.stm.job.QuartzTestTwoJob", "QuartzTestTwoJob")
                     //添加执行规则
                     .withSchedule(cronScheduleBuilder)
                     .build();
@@ -99,6 +100,22 @@ public class HelloController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 删除定时任务
+     * @return
+     */
+    @RequestMapping("/delJob")
+    public String delJob() {
+        try {
+            asched.pauseTrigger(TriggerKey.triggerKey("com.stm.job.QuartzTestTwoJob","QuartzTestTwoJob"));
+            asched.unscheduleJob(TriggerKey.triggerKey("com.stm.job.QuartzTestTwoJob","QuartzTestTwoJob"));
+            asched.deleteJob(new JobKey("com.stm.job.QuartzTestTwoJob","QuartzTestTwoJob"));
+        } catch (SchedulerException e) {
+            e.printStackTrace();
+        }
+    return "sucess";
     }
     /**
      * 将类名反射为类
