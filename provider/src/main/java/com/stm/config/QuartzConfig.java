@@ -1,6 +1,6 @@
 package com.stm.config;
 
-import com.stm.controller.QuartzTestJob;
+import com.stm.job.QuartzTestJob;
 import org.quartz.CronScheduleBuilder;
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
@@ -49,7 +49,7 @@ public class QuartzConfig {
     }
     
     @Bean
-    public void scs (){
+    public void startJob (){
         JobDetail jobDetail = quartzTestDetail();
         Trigger trigger =quartzTestJobTrigger();
         try {
