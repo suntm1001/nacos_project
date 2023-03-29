@@ -1,6 +1,5 @@
 package com.stm.controller;
 
-import com.stm.job.QuartzTestJob;
 import org.quartz.CronScheduleBuilder;
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;

@@ -79,4 +79,9 @@ public class MysqlDataSource {
         return mapList;
     }
     
+    public void connClose()throws SQLException{
+        resultSet.close();
+        preparedStatement.close();
+        connection.close();
+    }
 }
