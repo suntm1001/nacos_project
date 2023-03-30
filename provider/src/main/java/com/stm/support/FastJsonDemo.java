@@ -29,5 +29,10 @@ public class FastJsonDemo {
         //json字符转对象
         Page pageJson = JSON.parseObject(str,Page.class);
         System.err.println(pageJson.getCurrent());
+        
+        BusiWrapper<Page> de = new BusiWrapper<>();
+        de.setObj(page);
+        de.setResMsg("11");
+        
     }
 }
