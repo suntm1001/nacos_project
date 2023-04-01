@@ -23,7 +23,7 @@ public class TokenService {
         //设置token过期时间
         calendar.add(Calendar.MINUTE, 30);
         token = JWT.create().withAudience(user.getId()).withIssuedAt(start).withExpiresAt(calendar.getTime())
-                .sign(Algorithm.HMAC256(user.getPassword()));
+                .sign(Algorithm.HMAC256(user.getUsername()));
         return token;
     }
 }
