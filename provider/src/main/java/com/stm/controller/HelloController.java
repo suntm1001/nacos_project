@@ -1,5 +1,8 @@
 package com.stm.controller;
 
+import com.alibaba.fastjson.JSONObject;
+import com.stm.annotation.UserLoginToken;
+import com.stm.common.Result;
 import org.quartz.CronScheduleBuilder;
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
@@ -20,13 +23,16 @@ public class HelloController {
     private Scheduler asched;
     
     @RequestMapping("/hello")
-    public String hello(){
+    @UserLoginToken
+    public Result<Object> hello(){
+        JSONObject jsonObject = new JSONObject();
         String str ="git@github.com:suntm1001/nacos_project.git";
         String s = "ss";
         String test ="";
         String hebing="da";
         String s221="";
-        return "l";
+        jsonObject.put("hh", "22");
+        return Result.success(jsonObject);
     }
 
     /**
