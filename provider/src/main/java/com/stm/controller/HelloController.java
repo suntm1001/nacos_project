@@ -3,6 +3,9 @@ package com.stm.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.stm.annotation.UserLoginToken;
 import com.stm.common.Result;
+import com.stm.pojo.User;
+import java.util.ArrayList;
+import java.util.List;
 import org.quartz.CronScheduleBuilder;
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
@@ -132,5 +135,23 @@ public class HelloController {
         //将前端传的定时任务类名反射为类
         Class<?> class1 = Class.forName(classname);
         return (Class<? extends QuartzJobBean>) class1;
+    }
+
+
+    /**
+     * aop数据字典转化测试
+     * @return
+     */
+    @RequestMapping("/dictTest")
+    //@UserLoginToken
+    public List<User> dictTest(){
+        List<User> list = new ArrayList<>();
+        User user = new User();
+        user.setId("1");
+        user.setUsername("sh");
+        user.setPassword("12");
+        user.setSex("1");
+        list.add(user);
+        return list;
     }
 }

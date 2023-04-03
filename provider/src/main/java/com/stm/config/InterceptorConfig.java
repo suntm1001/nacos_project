@@ -12,7 +12,8 @@ public class InterceptorConfig implements WebMvcConfigurer {
     DemoInterceptor interceptor;
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(interceptor).addPathPatterns("/**");
+        registry.addInterceptor(interceptor).addPathPatterns("/**")
+                ;//.excludePathPatterns("/hello") //过滤掉相关请求
     }
     
 }
