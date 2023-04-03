@@ -19,16 +19,37 @@ import org.springframework.util.StringUtils;
 @Aspect
 @Component
 public class DemoAop {
-    
-    @Pointcut("execution(* com.stm.controller..*.*(..))")
+    /**
+     * 定义切点,切点为对应controller
+     */
+    @Pointcut("execution(* com.stm.controller.*.*(..))")
     public void export(){
         
     }
-    
+
+    /**
+     * Advice，在切入点上执行的增强处理，主要有五个注解：
+     *
+     * @Before 在切点方法之前执行
+     *
+     * @After 在切点方法之后执行
+     *
+     * @AfterReturning 切点方法返回后执行
+     *
+     * @AfterThrowing 切点方法抛异常执行
+     *
+     * @Around 属于环绕增强，能控制切点执行前，执行后
+     * @param proceedingJoinPoint
+     * @return
+     * @throws Throwable
+     */
     @Around("export()")
     public Object afterExport(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
     Object object = new Object();
+    //方法中的参数JoinPoint为连接点对象，它可以获取当前切入的方法的参数、代理类等信息，因此可以记录一些信息，验证一些信息等
     object = proceedingJoinPoint.proceed();
+    //获取所有参数
+    Object[] args = proceedingJoinPoint.getArgs();
     //此处获取到数据库查询出来的数据之后，即可根据注解判断对需要进行字典转化的属性进行转化
     List<Object> list = (List<Object>) object;
     for (Object object1:list){

@@ -144,7 +144,7 @@ public class HelloController {
      */
     @RequestMapping("/dictTest")
     //@UserLoginToken
-    public List<User> dictTest(){
+    public List<User> dictTest(String name){
         List<User> list = new ArrayList<>();
         User user = new User();
         user.setId("1");
