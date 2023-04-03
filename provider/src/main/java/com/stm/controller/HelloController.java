@@ -1,6 +1,7 @@
 package com.stm.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.stm.annotation.PassToken;
 import com.stm.annotation.UserLoginToken;
 import com.stm.common.Result;
 import com.stm.pojo.User;
@@ -143,7 +144,7 @@ public class HelloController {
      * @return
      */
     @RequestMapping("/dictTest")
-    //@UserLoginToken
+    @PassToken
     public List<User> dictTest(String name){
         List<User> list = new ArrayList<>();
         User user = new User();

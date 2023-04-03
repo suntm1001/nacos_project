@@ -21,8 +21,11 @@ import org.springframework.util.StringUtils;
 public class DemoAop {
     /**
      * 定义切点,切点为对应controller
+     * execution表达式第一个*表示匹配任意的方法返回值，第二个*表示所有controller包下的类，第三个*表示所有方法,第一个..表示任意参数个数。
      */
-    @Pointcut("execution(* com.stm.controller.*.*(..))")
+    //@Pointcut("execution(* com.stm.controller.*.*(..))")
+    //定义切点,切点为添加了注解的方法
+    @Pointcut("@annotation(com.stm.annotation.PassToken)")
     public void export(){
         
     }
