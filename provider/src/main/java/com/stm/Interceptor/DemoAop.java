@@ -25,7 +25,7 @@ public class DemoAop {
      */
     //@Pointcut("execution(* com.stm.controller.*.*(..))")
     //定义切点,切点为添加了注解的方法
-    @Pointcut("@annotation(com.stm.annotation.PassToken)")
+    @Pointcut("@annotation(com.stm.annotation.AnnotationTest)")
     public void export(){
         
     }

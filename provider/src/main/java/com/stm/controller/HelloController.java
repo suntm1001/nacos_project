@@ -1,6 +1,7 @@
 package com.stm.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.stm.annotation.AnnotationTest;
 import com.stm.annotation.PassToken;
 import com.stm.annotation.UserLoginToken;
 import com.stm.common.Result;
@@ -144,7 +145,7 @@ public class HelloController {
      * @return
      */
     @RequestMapping("/dictTest")
-    @PassToken
+    @AnnotationTest
     public List<User> dictTest(String name){
         List<User> list = new ArrayList<>();
         User user = new User();
@@ -152,7 +153,12 @@ public class HelloController {
         user.setUsername("sh");
         user.setPassword("12");
         user.setSex("1");
-        list.add(user);
+        User user1 = new User();
+        user1.setId("1");
+        user1.setUsername("sh");
+        user1.setPassword("12");
+        user1.setSex("1");
+        list.add(user1);
         return list;
     }
 }
