@@ -6,8 +6,15 @@ import com.stm.annotation.PassToken;
 import com.stm.annotation.UserLoginToken;
 import com.stm.common.Result;
 import com.stm.pojo.User;
+import com.stm.support.MyTask;
+import com.stm.support.MyThreadPool;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+import java.util.concurrent.ThreadPoolExecutor;
+import lombok.extern.slf4j.Slf4j;
 import org.quartz.CronScheduleBuilder;
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
@@ -22,6 +29,7 @@ import org.springframework.scheduling.quartz.QuartzJobBean;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Slf4j
 @RestController
 public class HelloController {
     @Autowired
@@ -160,5 +168,57 @@ public class HelloController {
         user1.setSex("1");
         list.add(user1);
         return list;
+    }
+
+    /**
+     * aop数据字典转化测试
+     * @return
+     */
+    @RequestMapping("/threadPool")
+    @PassToken
+    public Result threadPool() throws ExecutionException, InterruptedException {
+        JSONObject jsonObject = new JSONObject();
+        
+        long start = System.currentTimeMillis();
+        ThreadPoolExecutor executor = MyThreadPool.createThreadPool();
+        List<Future<String>> list = new LinkedList<>();
+        List<Integer> tempList = new ArrayList<>();
+        //创建测试用例
+        for(int i=0; i<100; i++) {
+            tempList.add(100*(i+1));
+        }
+        for(int i=0; i<tempList.size(); i++) {
+            MyTask worker = new MyTask(tempList.get(i));	//执行任务
+            //下面两行代码是将执行的返回结果进行汇总
+            Future<String> submit = executor.submit(worker);
+            list.add(submit);
+        }
+        List<String> result = new LinkedList<>();
+        int sucess = 0;
+        int fail=0;
+        for(Future<String> f : list) {
+            //将汇总好的结果进行轮询，判断任务是否执行完成，确保每个任务执行完成后将结果添加到结果集中
+            while(true) {
+                if(f.isDone() && !f.isCancelled()) {
+                    String object = f.get();
+                    if("成功".equals(object)){
+                        sucess++;
+                    }else{
+                        fail++;
+                    }
+                    result.add(object);
+                    break;
+                }
+            }
+        }
+        long end = System.currentTimeMillis();
+        log.info("work time:"+(end - start)+"ms");
+        //终止线程
+        executor.shutdown();
+        while(!executor.isTerminated()) {}
+        log.info("Finished all threads");
+
+        jsonObject.put("result","成功条数："+sucess+",失败条数："+fail);
+        return Result.success(jsonObject);
     }
 }

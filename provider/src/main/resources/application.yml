@@ -12,3 +12,8 @@ server:
 #        server-addr: 127.0.0.1:8848
 #        #namespace: 39e1e969-15f9-46d2-832d-fa052da55377
 #        #group: mall-user
+logging:
+  level: 
+   root: info
+  file:
+    path: /home/ap/log
