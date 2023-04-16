@@ -8,12 +8,13 @@ import com.stm.service.TokenService;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("user")
+@RequestMapping("/user")
 public class UserController {
     @Autowired
     private TokenService tokenService;
@@ -23,8 +24,8 @@ public class UserController {
      * @param response
      * @return
      */
-    @RequestMapping(value = "/login" ,method = RequestMethod.GET)
-    public Result<Object> login(User user, HttpServletResponse response) {
+    @RequestMapping(value = "/login" ,method = RequestMethod.POST)
+    public Result<Object> login(@RequestBody User user, HttpServletResponse response) {
         JSONObject jsonObject = new JSONObject();
         //获取用户账号密码
         User userForBase = new User();

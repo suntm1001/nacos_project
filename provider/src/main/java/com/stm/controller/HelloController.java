@@ -26,6 +26,7 @@ import org.quartz.TriggerBuilder;
 import org.quartz.TriggerKey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.quartz.QuartzJobBean;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -219,6 +220,23 @@ public class HelloController {
         log.info("Finished all threads");
 
         jsonObject.put("result","成功条数："+sucess+",失败条数："+fail);
+        return Result.success(jsonObject);
+    }
+
+    @RequestMapping("/dataTest")
+    @UserLoginToken
+    public Result<Object> dataTest(@RequestBody User userqu){
+        JSONObject jsonObject = new JSONObject();
+        List<User> list = new ArrayList<>();
+        User user = new User();
+        user.setId("1001");
+        user.setSex("男");
+        user.setUsername("xiaoshan");
+
+        list.add(user);
+        user.setUsername("222");
+        list.add(user);
+        jsonObject.put("list", list);
         return Result.success(jsonObject);
     }
 }
